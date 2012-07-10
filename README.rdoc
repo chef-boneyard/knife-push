@@ -1,0 +1,10 @@
+== Knife Pushy
+
+= DESCRIPTION:
+
+Eleventy hundred kajillion foot-pounds of awesome.
+
+= USAGE:
+
+    rake install
+    knife pushy status
