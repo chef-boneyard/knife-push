@@ -1,7 +1,7 @@
 class Chef
   class Knife
-    class PushyStart < Chef::Knife
-      banner "pushy start <command> [<node> <node> ...]"
+    class PushyJobStart < Chef::Knife
+      banner "pushy job start <command> [<node> <node> ...]"
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
