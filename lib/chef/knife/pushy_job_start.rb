@@ -15,10 +15,7 @@ class Chef
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
-
         nodes = name_args[1,name_args.length-1]
-
-        pp get_quorum(config[:quorum], nodes.length)
 
         job_json = {
           'command' => name_args[0],
@@ -68,17 +65,20 @@ class Chef
         end
       end
 
-      def get_quorum(quorum, nodes)
+      def get_quorum(quorum, total_nodes)
         modifier = /\D+/.match(quorum) || []
-        num = quorum.to_f
+        num = [0,quorum.to_f].max
 
-        case modifier[0]
-          when "%" then
-            ((num/100)*nodes).ceil
-          else
-            num.ceil > nodes ? nodes : num.ceil
-        end
+        quorum_nodes = case modifier[0]
+                         when "%" then
+                           ((num/100)*total_nodes).ceil
+                         else
+                           num.ceil
+                       end
+
+        [quorum_nodes, total_nodes].min
       end
+
     end
   end
 end
