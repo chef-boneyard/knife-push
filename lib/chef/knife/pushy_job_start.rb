@@ -3,6 +3,10 @@ class Chef
     class PushyJobStart < Chef::Knife
       banner "pushy job start <command> [<node> <node> ...]"
 
+      option :run_timeout,
+        :long => '--timeout TIMEOUT',
+        :description => "Maximum time the job will be allowed to run (in seconds)."
+
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
@@ -10,6 +14,7 @@ class Chef
           'command' => name_args[0],
           'nodes' => name_args[1,name_args.length-1]
         }
+        job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
         result = rest.post_rest('pushy/jobs', job_json)
         job_uri = result['uri']
         puts "Started.  Job ID: #{job_uri[-32,32]}"
@@ -33,7 +38,7 @@ class Chef
           [false, 'Initialized.']
         when 'voting'
           [false, job['status'].capitalize + '.']
-        when 'executing', 'complete'
+        when 'running', 'complete'
           total = job['nodes'].values.inject(0) { |sum,nodes| sum+nodes.length }
           complete = job['nodes'].keys.inject(0) { |sum,status|
             nodes = job['nodes'][status]
