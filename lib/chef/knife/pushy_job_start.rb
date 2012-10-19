@@ -61,17 +61,18 @@ class Chef
       end
 
       def get_quorum(quorum, total_nodes)
-        modifier = /\D+/.match(quorum) || []
-        num = [0,quorum.to_f].max
+        unless qmatch = /^(\d+)(\%?)$/.match(quorum)
+          raise "Invalid Format please enter integer or percent"
+        end
 
-        quorum_nodes = case modifier[0]
-                         when "%" then
-                           ((num/100)*total_nodes).ceil
-                         else
-                           num.ceil
-                       end
+        num = qmatch[1]
 
-        [quorum_nodes, total_nodes].min
+        case qmatch[2]
+          when "%" then
+            ((num.to_f/100)*total_nodes).ceil
+          else
+            num
+        end
       end
 
     end
