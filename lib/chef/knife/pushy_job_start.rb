@@ -3,12 +3,23 @@ class Chef
     class PushyJobStart < Chef::Knife
       banner "pushy job start <command> [<node> <node> ...]"
 
+      option :quorum,
+            :short => '-q',
+            :long => '-quorum',
+            :default => '100%',
+            :description => 'Pushy job quorum. Percentage or Count'
+
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
+        nodes = name_args[1,name_args.length-1]
+
+        pp get_quorum(config[:quorum], nodes.length)
+
         job_json = {
           'command' => name_args[0],
-          'nodes' => name_args[1,name_args.length-1]
+          'nodes' => nodes,
+          'quorum' => get_quorum(config[:quorum], nodes.length)
         }
         result = rest.post_rest('pushy/jobs', job_json)
         job_uri = result['uri']
@@ -26,6 +37,8 @@ class Chef
 
         output(job)
       end
+
+      private
 
       def status_string(job)
         case job['status']
@@ -47,6 +60,18 @@ class Chef
           # Finished states
         else
           [true, job['status'].capitalize + '.']
+        end
+      end
+
+      def get_quorum(quorum, nodes)
+        modifier = /\D+/.match(quorum) || []
+        num = quorum.to_f
+
+        case modifier[0]
+          when "%" then
+            ((num/100)*nodes).ceil
+          else
+            num.ceil > nodes ? nodes : num.ceil
         end
       end
     end
