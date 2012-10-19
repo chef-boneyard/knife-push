@@ -6,35 +6,29 @@ class Chef
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
-        nodes = rest.get_rest(get_url_suffix(name_args))
-
-        output(nodes, name_args)
+        get_node_statuses(name_args).each do |node_status|
+          puts "#{node_status['node_name']}\t#{node_status['status']}\t#{node_status['updated_at']}"
+        end
       end
 
       private
 
-      def get_url_suffix(node_list=[])
-
-        if node_list.length == 1
-          "pushy/node_states/#{node_list[0]}"
+      def get_node_statuses(name_args=[])
+        if name_args.length == 0
+          rest.get_rest("pushy/node_states")
         else
-          "pushy/node_states"
-        end
-
-      end
-
-      def output(nodes, arg_list)
-        if nodes.class == Array && arg_list.length > 0
-          output_list = arg_list.map do |item|
-
-            nodes.select do |node|
-              node["node_name"] == item
+          results = []
+          name_args.each do |arg|
+            if arg.index(':')
+              search(:node, arg).each do |node|
+                results << rest.get_rest("pushy/node_states/#{node.node_name}")
+              end
+            else
+              results << rest.get_rest("pushy/node_states/#{arg}")
             end
-
           end
+          results
         end
-
-        super(output_list || nodes)
       end
 
     end
