@@ -8,8 +8,8 @@ class Chef
         :description => "Maximum time the job will be allowed to run (in seconds)."
 
       option :quorum,
-            :short => '-q',
-            :long => '-quorum',
+            :short => '-q QUORUM',
+            :long => '--quorum QUORUM',
             :default => '100%',
             :description => 'Pushy job quorum. Percentage or Count'
 
