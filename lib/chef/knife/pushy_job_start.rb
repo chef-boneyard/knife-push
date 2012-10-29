@@ -4,8 +4,8 @@ class Chef
       banner "pushy job start <command> [<node> <node> ...]"
 
       option :quorum,
-            :short => '-q',
-            :long => '-quorum',
+            :short => '-q QUORUM',
+            :long => '--quorum QUORUM',
             :default => '100%',
             :description => 'Pushy job quorum. Percentage or Count'
 
