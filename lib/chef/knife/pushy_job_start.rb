@@ -7,7 +7,7 @@ class Chef
             :short => '-q QUORUM',
             :long => '--quorum QUORUM',
             :default => '100%',
-            :description => 'Pushy job quorum. Percentage or Count'
+            :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
