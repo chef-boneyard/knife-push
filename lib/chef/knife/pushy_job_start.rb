@@ -7,12 +7,20 @@ class Chef
         :long => '--timeout TIMEOUT',
         :description => "Maximum time the job will be allowed to run (in seconds)."
 
+      option :quorum,
+            :short => '-q QUORUM',
+            :long => '--quorum QUORUM',
+            :default => '100%',
+            :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
+
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
+        nodes = name_args[1,name_args.length-1]
 
         job_json = {
           'command' => name_args[0],
-          'nodes' => name_args[1,name_args.length-1]
+          'nodes' => nodes,
+          'quorum' => get_quorum(config[:quorum], nodes.length)
         }
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
         result = rest.post_rest('pushy/jobs', job_json)
@@ -31,6 +39,8 @@ class Chef
 
         output(job)
       end
+
+      private
 
       def status_string(job)
         case job['status']
@@ -54,6 +64,22 @@ class Chef
           [true, job['status'].capitalize + '.']
         end
       end
+
+      def get_quorum(quorum, total_nodes)
+        unless qmatch = /^(\d+)(\%?)$/.match(quorum)
+          raise "Invalid Format please enter integer or percent"
+        end
+
+        num = qmatch[1]
+
+        case qmatch[2]
+          when "%" then
+            ((num.to_f/100)*total_nodes).ceil
+          else
+            num
+        end
+      end
+
     end
   end
 end
