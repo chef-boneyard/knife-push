@@ -76,7 +76,7 @@ class Chef
           when "%" then
             ((num.to_f/100)*total_nodes).ceil
           else
-            num
+            num.to_i
         end
       end
 
