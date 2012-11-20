@@ -48,20 +48,17 @@ class Chef
           [false, 'Initialized.']
         when 'voting'
           [false, job['status'].capitalize + '.']
-        when 'running', 'complete'
+        else
           total = job['nodes'].values.inject(0) { |sum,nodes| sum+nodes.length }
           complete = job['nodes'].keys.inject(0) { |sum,status|
             nodes = job['nodes'][status]
-            sum + (%w(new voting executing).include?(status) ? 0 : nodes.length)
+            sum + (%w(new voting running).include?(status) ? 0 : nodes.length)
           }
-          if job['status'] == 'executing'
+          if job['status'] == 'running'
             [false, job['status'].capitalize + " (#{complete}/#{total} complete) ..."]
           else
-            [true, job['status'].capitalize + " (#{complete}/#{total} complete) ..."]
+            [true, job['status'].capitalize + " (#{complete}/#{total} complete)."]
           end
-          # Finished states
-        else
-          [true, job['status'].capitalize + '.']
         end
       end
 
