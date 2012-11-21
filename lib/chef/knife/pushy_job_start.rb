@@ -80,7 +80,9 @@ class Chef
       end
 
       def status_code(job)
-        if job['status'] == "complete" && job["nodes"].keys.all? { |key| key == "succeeded" }
+        if job['status'] == "complete" && job["nodes"].keys.all? do |key|
+            key == "succeeded" || key == "nacked"
+          end
           0
         else
           1
