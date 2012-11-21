@@ -38,6 +38,8 @@ class Chef
         end until finished
 
         output(job)
+
+        exit(status_code(job))
       end
 
       private
@@ -74,6 +76,14 @@ class Chef
             ((num.to_f/100)*total_nodes).ceil
           else
             num.to_i
+        end
+      end
+
+      def status_code(job)
+        if job['status'] == "complete" && !job["nodes"].keys.include?("failed")
+          0
+        else
+          1
         end
       end
 
