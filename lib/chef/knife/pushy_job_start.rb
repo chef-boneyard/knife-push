@@ -54,7 +54,7 @@ class Chef
           total = job['nodes'].values.inject(0) { |sum,nodes| sum+nodes.length }
           complete = job['nodes'].keys.inject(0) { |sum,status|
             nodes = job['nodes'][status]
-            sum + (%w(new voting running).include?(status) ? 0 : nodes.length)
+            sum + (%w(new voting running).include?(status) ? 0 : 1)
           }
           if job['status'] == 'running'
             [false, job['status'].capitalize + " (#{complete}/#{total} complete) ..."]
