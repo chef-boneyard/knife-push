@@ -52,14 +52,14 @@ class Chef
           [false, job['status'].capitalize + '.']
         else
           total = job['nodes'].values.inject(0) { |sum,nodes| sum+nodes.length }
-          complete = job['nodes'].keys.inject(0) { |sum,status|
+          in_progress = job['nodes'].keys.inject(0) { |sum,status|
             nodes = job['nodes'][status]
-            sum + (%w(new voting running).include?(status) ? 0 : nodes.length)
+            sum + (%w(new voting running).include?(status) ? 1 : 0)
           }
           if job['status'] == 'running'
-            [false, job['status'].capitalize + " (#{complete}/#{total} complete) ..."]
+            [false, job['status'].capitalize + " (#{in_progress}/#{total} in progress) ..."]
           else
-            [true, job['status'].capitalize + " (#{complete}/#{total} complete)."]
+            [true, job['status'].capitalize + '.']
           end
         end
       end
@@ -81,7 +81,7 @@ class Chef
 
       def status_code(job)
         if job['status'] == "complete" && job["nodes"].keys.all? do |key|
-            key == "succeeded" || key == "nacked"
+            key == "succeeded" || key == "nacked" || key == "unavailable"
           end
           0
         else
