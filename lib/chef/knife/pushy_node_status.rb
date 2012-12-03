@@ -7,7 +7,7 @@ class Chef
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
         get_node_statuses(name_args).each do |node_status|
-          puts "#{node_status['node_name']}\t#{node_status['status']}\t#{node_status['updated_at']}"
+          puts "#{node_status['node_name']}\t#{node_status['availability']}"
         end
       end
 
