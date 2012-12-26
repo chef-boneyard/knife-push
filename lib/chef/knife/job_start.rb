@@ -1,7 +1,7 @@
 class Chef
   class Knife
-    class PushyJobStart < Chef::Knife
-      banner "pushy job start <command> [<node> <node> ...]"
+    class JobStart < Chef::Knife
+      banner "job start <command> [<node> <node> ...]"
 
       option :run_timeout,
         :long => '--timeout TIMEOUT',

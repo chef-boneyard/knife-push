@@ -1,7 +1,7 @@
 class Chef
   class Knife
-    class PushyNodeStatus < Chef::Knife
-      banner "pushy node status [<node> <node> ...]"
+    class NodeStatus < Chef::Knife
+      banner "node status [<node> <node> ...]"
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
