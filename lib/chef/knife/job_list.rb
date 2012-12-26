@@ -1,7 +1,7 @@
 class Chef
   class Knife
     class JobList < Chef::Knife
-      banner "job list"
+      banner "knife job list"
 
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
