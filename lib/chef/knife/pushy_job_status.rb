@@ -8,7 +8,15 @@ class Chef
 
         job_id = name_args[0]
         job = rest.get_rest("pushy/jobs/#{job_id}")
-        output(job)
+        if job.kind_of?(Array) # list of jobs
+          output(as_map(job))
+        else
+          output(job)
+        end
+      end
+
+      def as_map(jobs)
+        jobs.inject({}) { |map, job| map[job['id']] =job;map}
       end
     end
   end
