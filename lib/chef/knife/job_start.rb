@@ -13,6 +13,11 @@ class Chef
             :default => '100%',
             :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
 
+      option :barriers,
+            :short => '-b "<barrier> <barrier> ..."',
+            :long  => '--barriers "<barrier> <barrier> ..."',
+            :description => 'CREST barrier names'
+
       def run
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
         nodes = name_args[1,name_args.length-1]
@@ -20,7 +25,8 @@ class Chef
         job_json = {
           'command' => name_args[0],
           'nodes' => nodes,
-          'quorum' => get_quorum(config[:quorum], nodes.length)
+          'quorum' => get_quorum(config[:quorum], nodes.length),
+          'barriers' => config[:barriers].split(" ")
         }
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
         result = rest.post_rest('pushy/jobs', job_json)
