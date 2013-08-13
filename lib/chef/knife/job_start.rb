@@ -1,6 +1,11 @@
 class Chef
   class Knife
     class JobStart < Chef::Knife
+
+      deps do
+        require 'chef/search/query'
+      end
+
       banner "knife job start <command> [<node> <node> ...]"
 
       option :run_timeout,
@@ -13,9 +18,37 @@ class Chef
             :default => '100%',
             :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
 
+      option :search,
+            :short => '-q QUERY',
+            :long => '--query QUERY',
+            :required => false,
+            :description => 'Solr query for list of job candidates.'
+
       def run
+        if config[:query]
+          q = Chef::Search::Query.new
+          @type, @query = config[:query].split(/:/)
+          @escaped_query = URI.escape(@query,
+                                     Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+          begin
+            nodes = q.search(@type, @escaped_query)
+          rescue Net::HTTPServerException => e
+            msg Chef::JSONCompat.from_json(e.response.body)['error'].first
+            ui.error("knife search failed: #{msg}")
+            exit 1
+          end
+          nodes.each do |node|
+            unless node.kind_of?(Chef::Node)
+              Chef::Log.error('Invalid search query.')
+              exit 1
+            end
+            nodes << node.name
+          end
+        else
+          nodes = name_args[1,name_args.length-1]
+        end
+
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
-        nodes = name_args[1,name_args.length-1]
 
         job_json = {
           'command' => name_args[0],
