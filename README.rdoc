@@ -47,7 +47,7 @@ percentage (e.g. 50%) or as an absolute number of nodes (e.g. 145). Default valu
 == Examples
 For example, to search for nodes assigned the role “webapp”, and where 90% of those nodes must be available, enter:
 
-  $ knife job start -quorum 90% 'chef-client' --query 'role:webapp'
+  $ knife job start -quorum 90% 'chef-client' --search 'role:webapp'
 
 To search for a specific set of nodes (named chico, harpo, groucho, gummo, zeppo), and where 90% of those nodes must be available, enter:
 

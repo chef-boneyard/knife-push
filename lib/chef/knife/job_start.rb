@@ -20,18 +20,17 @@ class Chef
             :default => '100%',
             :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
 
-      option :query,
-            :short => '-q QUERY',
-            :long => '--query QUERY',
+      option :search,
+            :short => '-s QUERY',
+            :long => '--search QUERY',
             :required => false,
             :description => 'Solr query for list of job candidates.'
 
       def run
         @node_names = []
-        Chef::Log.info("running with #{config[:query]} ...")
-        if config[:query]
+        if config[:search]
           q = Chef::Search::Query.new
-          @escaped_query = URI.escape(config[:query],
+          @escaped_query = URI.escape(config[:search],
                                      Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
           begin
             nodes = q.search(:node, @escaped_query).first
