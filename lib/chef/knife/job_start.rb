@@ -3,6 +3,8 @@ class Chef
     class JobStart < Chef::Knife
 
       deps do
+        require 'chef/rest'
+        require 'chef/node'
         require 'chef/search/query'
       end
 
@@ -18,41 +20,36 @@ class Chef
             :default => '100%',
             :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
 
-      option :search,
+      option :query,
             :short => '-q QUERY',
             :long => '--query QUERY',
             :required => false,
             :description => 'Solr query for list of job candidates.'
 
       def run
+        @node_names = []
+        Chef::Log.info("running with #{config[:query]} ...")
         if config[:query]
           q = Chef::Search::Query.new
-          @type, @query = config[:query].split(/:/)
-          @escaped_query = URI.escape(@query,
+          @escaped_query = URI.escape(config[:query],
                                      Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
           begin
-            nodes = q.search(@type, @escaped_query)
+            nodes = q.search(:node, @escaped_query).first
           rescue Net::HTTPServerException => e
             msg Chef::JSONCompat.from_json(e.response.body)['error'].first
             ui.error("knife search failed: #{msg}")
             exit 1
           end
-          nodes.each do |node|
-            unless node.kind_of?(Chef::Node)
-              Chef::Log.error('Invalid search query.')
-              exit 1
-            end
-            nodes << node.name
-          end
+          nodes.each { |node| @node_names << node[:hostname] unless node[:hostname].nil? }
         else
-          nodes = name_args[1,name_args.length-1]
+          @node_names = name_args[1,name_args.length-1]
         end
 
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
         job_json = {
           'command' => name_args[0],
-          'nodes' => nodes,
+          'nodes' => @node_names,
           'quorum' => get_quorum(config[:quorum], nodes.length)
         }
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
