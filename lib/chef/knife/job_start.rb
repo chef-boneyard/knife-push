@@ -1,6 +1,13 @@
 class Chef
   class Knife
     class JobStart < Chef::Knife
+
+      deps do
+        require 'chef/rest'
+        require 'chef/node'
+        require 'chef/search/query'
+      end
+
       banner "knife job start <command> [<node> <node> ...]"
 
       option :run_timeout,
@@ -13,13 +20,35 @@ class Chef
             :default => '100%',
             :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
 
+      option :search,
+            :short => '-s QUERY',
+            :long => '--search QUERY',
+            :required => false,
+            :description => 'Solr query for list of job candidates.'
+
       def run
+        @node_names = []
+        if config[:search]
+          q = Chef::Search::Query.new
+          @escaped_query = URI.escape(config[:search],
+                                     Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+          begin
+            nodes = q.search(:node, @escaped_query).first
+          rescue Net::HTTPServerException => e
+            msg Chef::JSONCompat.from_json(e.response.body)['error'].first
+            ui.error("knife search failed: #{msg}")
+            exit 1
+          end
+          nodes.each { |node| @node_names << node[:hostname] unless node[:hostname].nil? }
+        else
+          @node_names = name_args[1,name_args.length-1]
+        end
+
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
-        nodes = name_args[1,name_args.length-1]
 
         job_json = {
           'command' => name_args[0],
-          'nodes' => nodes,
+          'nodes' => @node_names,
           'quorum' => get_quorum(config[:quorum], nodes.length)
         }
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
