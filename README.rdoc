@@ -1,10 +1,81 @@
-== Knife Pushy
+= Knife Pushy
 
 = DESCRIPTION:
 
-Eleventy hundred kajillion foot-pounds of awesome.
+The knife pushy plugin is used by the Chef workstation to interact with the Pushy API to start jobs, view job status, view job lists, and view node status.
 
-= USAGE:
+= INSTALLATION:
+
+To build and install the plugin, run:
 
     rake install
-    knife pushy status
+
+= CONFIGURATION:
+
+If pushy server is running on the same host as the OPC, then no reconfiguration is required on the Chef workstation.
+
+= SUBCOMMANDS:
+
+This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a <tt>--help</tt> flag.
+
+== job list
+
+The <tt>job list</tt> subcommand is used to view a list of Pushy jobs.
+
+== Syntax
+  $ knife job list
+
+== job start
+
+The <tt>job start</tt> subcommand is used to start a Pushy job.
+
+== Syntax
+  $ knife job start (options) COMMAND [NODE, NODE, ...]
+
+== Options
+This argument has the following options:
+
+  --timeout TIMEOUT
+
+The maximum amount of time (in seconds) by which a job must complete, before it will be stopped.
+
+  -q QUORUM --quorum QUORUM
+
+The minimum number of nodes that match the search criteria, are available, and acknowledge the job request. This can be expressed as a 
+percentage (e.g. 50%) or as an absolute number of nodes (e.g. 145). Default value: 100%
+
+== Examples
+For example, to search for nodes assigned the role “webapp”, and where 90% of those nodes must be available, enter:
+
+  $ knife job start -quorum 90% 'chef-client' --search 'role:webapp'
+
+To search for a specific set of nodes (named chico, harpo, groucho, gummo, zeppo), and where 90% of those nodes must be available, enter:
+
+  $ knife job start --quorum 90% 'chef-client' chico harpo groucho gummo zeppo
+
+Use the <tt>knife job start</tt> subcommand to run a job with the following syntax:
+
+  $ knife job start job_name node_name
+
+For example, to run a job named add-glasses against a node named “ricardosalazar”, enter the following:
+
+  $ knife job start add-glasses 'ricardosalazar'
+
+== job status
+
+The <tt>job status</tt> argument is used to view the status of Pushy jobs.
+
+== Syntax
+  $ knife job status
+
+== Examples
+For example, to view the status of a job that has the identifier of “235”, enter:
+
+  $ knife job status 235
+
+== node status
+
+The <tt>node status</tt> argument is used to identify nodes that Pushy may interact with.
+
+== Syntax
+  $ knife node status
