@@ -49,7 +49,7 @@ class Chef
         job_json = {
           'command' => name_args[0],
           'nodes' => @node_names,
-          'quorum' => get_quorum(config[:quorum], nodes.length)
+          'quorum' => get_quorum(config[:quorum], @node_names.length)
         }
         job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
         result = rest.post_rest('pushy/jobs', job_json)
