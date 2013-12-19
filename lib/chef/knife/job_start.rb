@@ -39,7 +39,7 @@ class Chef
             ui.error("knife search failed: #{msg}")
             exit 1
           end
-          nodes.each { |node| @node_names << node[:hostname] unless node[:hostname].nil? }
+          nodes.each { |node| @node_names << node[:name] unless node[:name].nil? }
         else
           @node_names = name_args[1,name_args.length-1]
         end
