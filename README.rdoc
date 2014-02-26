@@ -1,8 +1,8 @@
-= Knife Pushy
+= Knife Push
 
 = DESCRIPTION:
 
-The knife pushy plugin is used by the Chef workstation to interact with the Pushy API to start jobs, view job status, view job lists, and view node status.
+The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
 = INSTALLATION:
 
@@ -12,7 +12,7 @@ To build and install the plugin, run:
 
 = CONFIGURATION:
 
-If pushy server is running on the same host as the OPC, then no reconfiguration is required on the Chef workstation.
+If push server is running on the same host as the OPC, then no reconfiguration is required on the Chef workstation.
 
 = SUBCOMMANDS:
 
@@ -20,14 +20,14 @@ This plugin provides the following Knife subcommands.  Specific command options 
 
 == job list
 
-The <tt>job list</tt> subcommand is used to view a list of Pushy jobs.
+The <tt>job list</tt> subcommand is used to view a list of Push jobs.
 
 == Syntax
   $ knife job list
 
 == job start
 
-The <tt>job start</tt> subcommand is used to start a Pushy job.
+The <tt>job start</tt> subcommand is used to start a Push job.
 
 == Syntax
   $ knife job start (options) COMMAND [NODE, NODE, ...]
@@ -41,7 +41,7 @@ The maximum amount of time (in seconds) by which a job must complete, before it 
 
   -q QUORUM --quorum QUORUM
 
-The minimum number of nodes that match the search criteria, are available, and acknowledge the job request. This can be expressed as a 
+The minimum number of nodes that match the search criteria, are available, and acknowledge the job request. This can be expressed as a
 percentage (e.g. 50%) or as an absolute number of nodes (e.g. 145). Default value: 100%
 
 == Examples
@@ -63,7 +63,7 @@ For example, to run a job named add-glasses against a node named “ricardosalaz
 
 == job status
 
-The <tt>job status</tt> argument is used to view the status of Pushy jobs.
+The <tt>job status</tt> argument is used to view the status of Push jobs.
 
 == Syntax
   $ knife job status
@@ -75,7 +75,7 @@ For example, to view the status of a job that has the identifier of “235”, e
 
 == node status
 
-The <tt>node status</tt> argument is used to identify nodes that Pushy may interact with.
+The <tt>node status</tt> argument is used to identify nodes that Push may interact with.
 
 == Syntax
   $ knife node status
@@ -83,7 +83,7 @@ The <tt>node status</tt> argument is used to identify nodes that Pushy may inter
 
 == License
 
-Pushy - The push jobs component for chef
+Push - The push jobs component for chef
 
 **Copyright:** Copyright (c) 2008-2014 Chef Software, Inc.
 **License:** Apache License, Version 2.0
@@ -99,4 +99,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
