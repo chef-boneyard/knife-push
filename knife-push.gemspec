@@ -1,8 +1,9 @@
 $:.unshift(File.dirname(__FILE__) + '/lib')
+require 'knife-push/version'
 
 Gem::Specification.new do |s|
   s.name = "knife-push"
-  s.version = '0.4'
+  s.version = Knife::Push::VERSION
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
