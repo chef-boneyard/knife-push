@@ -45,6 +45,14 @@ class Chef
 
       def run
         @node_names = []
+
+        job_name = @name_args[0]
+        if job_name.nil?
+          ui.error "No job specified."
+          show_usage
+          exit 1
+        end
+
         if config[:search]
           q = Chef::Search::Query.new
           @escaped_query = URI.escape(config[:search],
@@ -61,10 +69,15 @@ class Chef
           @node_names = name_args[1,name_args.length-1]
         end
 
+        if @node_names.empty?
+          ui.error "No nodes to run job on. Specify nodes as arguments or use -s to specify a search query."
+          exit 1
+        end
+
         rest = Chef::REST.new(Chef::Config[:chef_server_url])
 
         job_json = {
-          'command' => name_args[0],
+          'command' => job_name,
           'nodes' => @node_names,
           'quorum' => get_quorum(config[:quorum], @node_names.length)
         }
@@ -138,4 +151,3 @@ class Chef
     end
   end
 end
-
