@@ -44,6 +44,10 @@ The maximum amount of time (in seconds) by which a job must complete, before it 
 The minimum number of nodes that match the search criteria, are available, and acknowledge the job request. This can be expressed as a
 percentage (e.g. 50%) or as an absolute number of nodes (e.g. 145). Default value: 100%
 
+  -b --no-wait
+
+Exit immediately after starting a job instead of waiting for it to complete.
+
 == Examples
 For example, to search for nodes assigned the role “webapp”, and where 90% of those nodes must be available, enter:
 

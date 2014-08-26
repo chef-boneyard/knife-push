@@ -43,6 +43,13 @@ class Chef
             :required => false,
             :description => 'Solr query for list of job candidates.'
 
+      option :nowait,
+        :long => '--no-wait',
+        :short => '-b',
+        :boolean => true,
+        :default => false,
+        :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
+
       def run
         @node_names = []
 
@@ -85,6 +92,7 @@ class Chef
         result = rest.post_rest('pushy/jobs', job_json)
         job_uri = result['uri']
         puts "Started.  Job ID: #{job_uri[-32,32]}"
+        exit(0) if config[:nowait]
         previous_state = "Initialized."
         begin
           sleep(0.1)
