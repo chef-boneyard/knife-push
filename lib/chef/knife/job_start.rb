@@ -44,7 +44,7 @@ class Chef
             :description => 'Solr query for list of job candidates.'
 
       option :nowait,
-        :long => '--no-wait',
+        :long => '--nowait',
         :short => '-b',
         :boolean => true,
         :default => false,
