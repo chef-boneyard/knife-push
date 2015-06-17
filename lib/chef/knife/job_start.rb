@@ -50,6 +50,11 @@ class Chef
         :default => false,
         :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
 
+      option :poll_interval,
+             :long => '--poll-interval RATE',
+             :default => 1.0,
+             :description => "Repeat interval for job status update (in seconds)."
+      
       def run
         @node_names = []
 
@@ -95,7 +100,8 @@ class Chef
         exit(0) if config[:nowait]
         previous_state = "Initialized."
         begin
-          sleep(0.1)
+          sleep(config[:poll_interval].to_f)
+          putc(".")
           job = rest.get_rest(job_uri)
           finished, state = status_string(job)
           if state != previous_state
