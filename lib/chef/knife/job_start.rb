@@ -54,18 +54,33 @@ class Chef
              :default => false,
              :description => 'Capture job output.'
 
+      option :with_env,
+             :long => "--with-env ENV",
+             :default => nil,
+             :description => 'JSON blob of environment variables to set.'
+
+      option :as_user,
+             :long => "--as-user USER",
+             :default => nil,
+             :description => 'User id to run as.'
+
+      option :in_dir,
+             :long => "--in-dir DIR",
+             :default => nil,
+             :description => 'Directory to execute the command in.'
+
       option :nowait,
-        :long => '--nowait',
-        :short => '-b',
-        :boolean => true,
-        :default => false,
-        :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
+             :long => '--nowait',
+             :short => '-b',
+             :boolean => true,
+             :default => false,
+             :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
 
       option :poll_interval,
              :long => '--poll-interval RATE',
              :default => 1.0,
              :description => "Repeat interval for job status update (in seconds)."
-      
+
       def run
         job_name = @name_args[0]
         if job_name.nil?
@@ -74,8 +89,6 @@ class Chef
           exit 1
         end
 
-        pp :send_file=>config[:send_file]
-        
         @node_names = JobHelpers.process_search(config[:search], name_args[1,@name_args.length-1])
 
         job_json = {
@@ -85,10 +98,12 @@ class Chef
         }
         job_json['file'] = "raw:" + JobHelpers.file_helper(config[:send_file]) if config[:send_file]
         job_json['quorum'] = JobHelpers.get_quorum(config[:quorum], @node_names.length)
+        env = JobHelpers.get_env(config)
+        job_json['env'] = env if env
+        job_json['dir'] = config[:in_dir] if config[:in_dir]
+        job_json['user'] = config[:as_user] if config[:as_user]
 
-        
         job = JobHelpers.run_helper(config, job_json)
-
 
         output(job)
 

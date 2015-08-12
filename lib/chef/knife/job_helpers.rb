@@ -40,7 +40,7 @@ class Chef
           ui.error "No nodes to run job on. Specify nodes as arguments or use -s to specify a search query."
           exit 1
         end
-        
+
         return node_names
       end
 
@@ -113,22 +113,30 @@ class Chef
 
       def self.file_helper(file_name)
         if file_name.nil?
-          ui.error "No recipe specified."
+          ui.error "No file specified."
           show_usage
           exit 1
         end
-
-        if File.exists?(file_name) 
+        contents = ""
+        if File.exists?(file_name)
           File.open(file_name, "rb") do |file|
-            recipe = file.read
+            contents = file.read
           end
         else
           ui.error "#{file_name} not found"
           exit 1
         end
-        return recipe
+        return contents
       end
-      
+
+      def self.get_env(config)
+        env = {}
+        begin
+          env = config[:with_env] ? JSON.parse(config[:with_env]) : {}
+        rescue Exception => e
+           Chef::Log.info("Can't parse environment as JSON")
+        end
+      end
     end
   end
 end
