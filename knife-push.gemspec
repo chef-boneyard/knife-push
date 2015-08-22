@@ -7,11 +7,11 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
-  s.summary = "Knife plugin for OPC push"
+  s.summary = "Knife plugin for chef push"
   s.description = s.summary
   s.author = "John Keiser"
   s.email = "jkeiser@opscode.com"
-  s.homepage = "http://www.opscode.com"
+  s.homepage = "http://www.chef.io"
 
   # We need a more recent version of mixlib-cli in order to support --no- options.
   # ... but, we can live with those options not working, if it means the plugin

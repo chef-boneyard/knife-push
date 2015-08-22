@@ -22,17 +22,17 @@ This plugin provides the following Knife subcommands.  Specific command options 
 
 The <tt>job list</tt> subcommand is used to view a list of Push jobs.
 
-== Syntax
+=== Syntax
   $ knife job list
 
 == job start
 
 The <tt>job start</tt> subcommand is used to start a Push job.
 
-== Syntax
+=== Syntax
   $ knife job start (options) COMMAND [NODE, NODE, ...]
 
-== Options
+=== Options
 This argument has the following options:
 
   --timeout TIMEOUT
@@ -48,7 +48,26 @@ percentage (e.g. 50%) or as an absolute number of nodes (e.g. 145). Default valu
 
 Exit immediately after starting a job instead of waiting for it to complete.
 
-== Examples
+  --with-env ENVIRONMENT
+
+Accept a json blob of environment variables and use those to set the
+variables for the client. For example '{"test": "foo"}' will set the
+push client environment variable "test" to "foo". (Push 2.0 and later)
+
+  --in-dir DIR
+
+Execute the remote command in the directory DIR. (Push 2.0 and later)
+
+  --file DATAFILE
+
+Send the file to the client. (Push 2.0 and later)
+
+  --capture
+
+Capture stdin and stdout for this job. (Push 2.0 and later)
+
+
+=== Examples
 For example, to search for nodes assigned the role “webapp”, and where 90% of those nodes must be available, enter:
 
   $ knife job start -quorum 90% 'chef-client' --search 'role:webapp'
@@ -65,14 +84,35 @@ For example, to run a job named add-glasses against a node named “ricardosalaz
 
   $ knife job start add-glasses 'ricardosalazar'
 
+== job output
+
+The <tt>job output </tt> command is used to view the output of Push
+jobs. (Push 2.0 and later). The output capture flag must have been set
+on job start; see the --capture option.
+
+=== Syntax
+
+  $ knife job output JOBID 
+
+=== Examples
+
+  $ knife job output 26e98ba162fa7ba6fb2793125553c7ae test --channel stdout
+
+=== Options
+
+  --channel [stderr|stdout]
+
+The output channel to capture. 
+
+
 == job status
 
-The <tt>job status</tt> argument is used to view the status of Push jobs.
+The <tt>job status</tt> command is used to view the status of Push jobs.
 
-== Syntax
-  $ knife job status
+=== Syntax
+  $ knife job status JOBID
 
-== Examples
+=== Examples
 For example, to view the status of a job that has the identifier of “235”, enter:
 
   $ knife job status 235
@@ -81,8 +121,10 @@ For example, to view the status of a job that has the identifier of “235”, e
 
 The <tt>node status</tt> argument is used to identify nodes that Push may interact with.
 
-== Syntax
+=== Syntax
   $ knife node status
+
+
 
 
 == License

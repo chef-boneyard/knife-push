@@ -43,21 +43,45 @@ class Chef
             :required => false,
             :description => 'Solr query for list of job candidates.'
 
+      option :send_file,
+             :long => '--file FILE',
+             :default => nil,
+             :description => 'File to send to job.'
+
+      option :capture_output,
+             :long => '--capture',
+             :boolean => true,
+             :default => false,
+             :description => 'Capture job output.'
+
+      option :with_env,
+             :long => "--with-env ENV",
+             :default => nil,
+             :description => 'JSON blob of environment variables to set.'
+
+      option :as_user,
+             :long => "--as-user USER",
+             :default => nil,
+             :description => 'User id to run as.'
+
+      option :in_dir,
+             :long => "--in-dir DIR",
+             :default => nil,
+             :description => 'Directory to execute the command in.'
+
       option :nowait,
-        :long => '--nowait',
-        :short => '-b',
-        :boolean => true,
-        :default => false,
-        :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
+             :long => '--nowait',
+             :short => '-b',
+             :boolean => true,
+             :default => false,
+             :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
 
       option :poll_interval,
              :long => '--poll-interval RATE',
              :default => 1.0,
              :description => "Repeat interval for job status update (in seconds)."
-      
-      def run
-        @node_names = []
 
+      def run
         job_name = @name_args[0]
         if job_name.nil?
           ui.error "No job specified."
@@ -65,102 +89,29 @@ class Chef
           exit 1
         end
 
-        if config[:search]
-          q = Chef::Search::Query.new
-          @escaped_query = URI.escape(config[:search],
-                                     Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-          begin
-            nodes = q.search(:node, @escaped_query).first
-          rescue Net::HTTPServerException => e
-            msg Chef::JSONCompat.from_json(e.response.body)['error'].first
-            ui.error("knife search failed: #{msg}")
-            exit 1
-          end
-          nodes.each { |node| @node_names << node.name }
-        else
-          @node_names = name_args[1,name_args.length-1]
-        end
-
-        if @node_names.empty?
-          ui.error "No nodes to run job on. Specify nodes as arguments or use -s to specify a search query."
-          exit 1
-        end
-
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
+        @node_names = JobHelpers.process_search(config[:search], name_args[1,@name_args.length-1])
 
         job_json = {
           'command' => job_name,
           'nodes' => @node_names,
-          'quorum' => get_quorum(config[:quorum], @node_names.length)
+          'capture_output' => config[:capture_output]
         }
-        job_json['run_timeout'] = config[:run_timeout].to_i if config[:run_timeout]
-        result = rest.post_rest('pushy/jobs', job_json)
-        job_uri = result['uri']
-        puts "Started.  Job ID: #{job_uri[-32,32]}"
-        exit(0) if config[:nowait]
-        previous_state = "Initialized."
-        begin
-          sleep(config[:poll_interval].to_f)
-          putc(".")
-          job = rest.get_rest(job_uri)
-          finished, state = status_string(job)
-          if state != previous_state
-            puts state
-            previous_state = state
-          end
-        end until finished
+        job_json['file'] = "raw:" + JobHelpers.file_helper(config[:send_file]) if config[:send_file]
+        job_json['quorum'] = JobHelpers.get_quorum(config[:quorum], @node_names.length)
+        env = JobHelpers.get_env(config)
+        job_json['env'] = env if env
+        job_json['dir'] = config[:in_dir] if config[:in_dir]
+        job_json['user'] = config[:as_user] if config[:as_user]
+
+        job = JobHelpers.run_helper(config, job_json)
 
         output(job)
 
-        exit(status_code(job))
+        exit(JobHelpers.status_code(job))
+
       end
 
       private
-
-      def status_string(job)
-        case job['status']
-        when 'new'
-          [false, 'Initialized.']
-        when 'voting'
-          [false, job['status'].capitalize + '.']
-        else
-          total = job['nodes'].values.inject(0) { |sum,nodes| sum+nodes.length }
-          in_progress = job['nodes'].keys.inject(0) { |sum,status|
-            nodes = job['nodes'][status]
-            sum + (%w(new voting running).include?(status) ? 1 : 0)
-          }
-          if job['status'] == 'running'
-            [false, job['status'].capitalize + " (#{in_progress}/#{total} in progress) ..."]
-          else
-            [true, job['status'].capitalize + '.']
-          end
-        end
-      end
-
-      def get_quorum(quorum, total_nodes)
-        unless qmatch = /^(\d+)(\%?)$/.match(quorum)
-          raise "Invalid Format please enter integer or percent"
-        end
-
-        num = qmatch[1]
-
-        case qmatch[2]
-          when "%" then
-            ((num.to_f/100)*total_nodes).ceil
-          else
-            num.to_i
-        end
-      end
-
-      def status_code(job)
-        if job['status'] == "complete" && job["nodes"].keys.all? do |key|
-            key == "succeeded" || key == "nacked" || key == "unavailable"
-          end
-          0
-        else
-          1
-        end
-      end
 
     end
   end
