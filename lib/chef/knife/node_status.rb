@@ -14,7 +14,9 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-require 'chef/rest'
+begin
+  require 'chef/rest'
+end
 
 class Chef
   class Knife
