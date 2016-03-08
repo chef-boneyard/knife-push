@@ -14,8 +14,6 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-require 'chef/rest'
-
 class Chef
   class Knife
     class JobStatus < Chef::Knife
