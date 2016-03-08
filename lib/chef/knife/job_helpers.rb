@@ -14,6 +14,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+
 class Chef
   class Knife
     module JobHelpers

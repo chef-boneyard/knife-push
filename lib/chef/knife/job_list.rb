@@ -14,6 +14,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+
 class Chef
   class Knife
     class JobList < Chef::Knife
@@ -26,5 +27,4 @@ class Chef
     end
   end
 end
-
 
