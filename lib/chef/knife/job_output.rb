@@ -24,14 +24,14 @@ class Chef
              :long => '--channel stdout|stderr',
              :default => 'stdout',
              :description => "Which output channel to fetch (default stdout)."
-      
+
       def run
         job_id = name_args[0]
         channel = get_channel(config[:channel])
         node = name_args[1]
 
         uri = "pushy/jobs/#{job_id}/output/#{node}/#{channel}"
-        
+
         job = rest.get_rest(uri, false, {"Accept"=>"application/octet-stream"})
 
         output(job)
@@ -46,9 +46,9 @@ class Chef
           return channel
         else
           raise "Invalid Format please enter stdout or stderr"
-        end        
+        end
       end
-      
+
     end
   end
 end
