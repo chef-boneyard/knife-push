@@ -14,9 +14,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-begin
-  require 'chef/rest'
-end
+require 'chef/rest'
 
 class Chef
   class Knife
@@ -24,8 +22,6 @@ class Chef
       banner "knife node status [<node> <node> ...]"
 
       def run
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
-
         get_node_statuses(name_args).each do |node_status|
           puts "#{node_status['node_name']}\t#{node_status['availability']}"
         end

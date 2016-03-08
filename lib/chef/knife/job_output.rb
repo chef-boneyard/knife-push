@@ -27,8 +27,6 @@ class Chef
              :description => "Which output channel to fetch (default stdout)."
       
       def run
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
-
         job_id = name_args[0]
         channel = get_channel(config[:channel])
         node = name_args[1]
