@@ -92,7 +92,6 @@ class Chef
       def self.run_helper(config, job_json)
         job_json['run_timeout'] ||= config[:run_timeout].to_i if config[:run_timeout]
 
-        rest = Chef::REST.new(Chef::Config[:chef_server_url])
         result = rest.post_rest('pushy/jobs', job_json)
         job_uri = result['uri']
         puts "Started.  Job ID: #{job_uri[-32,32]}"
