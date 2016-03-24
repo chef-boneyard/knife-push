@@ -20,7 +20,7 @@ class Chef
     class JobStart < Chef::Knife
 
       deps do
-        require 'chef/rest'
+        require 'chef/server_api'
         require 'chef/node'
         require 'chef/search/query'
       end
