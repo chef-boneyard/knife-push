@@ -1,7 +1,7 @@
 
 module Knife
   module Push
-    VERSION = '0.9.1'
+    VERSION = '1.0.0.pre'
     MAJOR, MINOR, TINY = VERSION.split('.')
   end
 end
