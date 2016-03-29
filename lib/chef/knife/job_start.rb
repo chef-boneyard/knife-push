@@ -15,9 +15,13 @@
 # under the License.
 #
 
+require 'chef/knife/job_helpers'
+
 class Chef
   class Knife
     class JobStart < Chef::Knife
+
+      include JobHelpers
 
       deps do
         require 'chef/rest'
@@ -89,25 +93,25 @@ class Chef
           exit 1
         end
 
-        @node_names = JobHelpers.process_search(config[:search], name_args[1,@name_args.length-1])
+        @node_names = process_search(config[:search], name_args[1,@name_args.length-1])
 
         job_json = {
           'command' => job_name,
           'nodes' => @node_names,
           'capture_output' => config[:capture_output]
         }
-        job_json['file'] = "raw:" + JobHelpers.file_helper(config[:send_file]) if config[:send_file]
-        job_json['quorum'] = JobHelpers.get_quorum(config[:quorum], @node_names.length)
-        env = JobHelpers.get_env(config)
+        job_json['file'] = "raw:" + file_helper(config[:send_file]) if config[:send_file]
+        job_json['quorum'] = get_quorum(config[:quorum], @node_names.length)
+        env = get_env(config)
         job_json['env'] = env if env
         job_json['dir'] = config[:in_dir] if config[:in_dir]
         job_json['user'] = config[:as_user] if config[:as_user]
 
-        job = JobHelpers.run_helper(config, job_json)
+        job = run_helper(config, job_json)
 
         output(job)
 
-        exit(JobHelpers.status_code(job))
+        exit(status_code(job))
 
       end
 
