@@ -18,7 +18,7 @@
 class Chef
   class Knife
     module JobHelpers
-      def self.process_search(search, nodes)
+      def process_search(search, nodes)
         node_names = []
         if search
           q = Chef::Search::Query.new
@@ -44,7 +44,7 @@ class Chef
         return node_names
       end
 
-      def self.status_string(job)
+      def status_string(job)
         case job['status']
         when 'new'
           [false, 'Initialized.']
@@ -64,7 +64,7 @@ class Chef
         end
       end
 
-      def self.get_quorum(quorum, total_nodes)
+      def get_quorum(quorum, total_nodes)
         unless qmatch = /^(\d+)(\%?)$/.match(quorum)
           raise "Invalid Format please enter integer or percent"
         end
@@ -79,7 +79,7 @@ class Chef
         end
       end
 
-      def self.status_code(job)
+      def status_code(job)
         if job['status'] == "complete" && job["nodes"].keys.all? do |key|
             key == "succeeded" || key == "nacked" || key == "unavailable"
           end
@@ -89,7 +89,7 @@ class Chef
         end
       end
 
-      def self.run_helper(config, job_json)
+      def run_helper(config, job_json)
         job_json['run_timeout'] ||= config[:run_timeout].to_i if config[:run_timeout]
 
         result = rest.post_rest('pushy/jobs', job_json)
@@ -110,7 +110,7 @@ class Chef
         job
       end
 
-      def self.file_helper(file_name)
+      def file_helper(file_name)
         if file_name.nil?
           ui.error "No file specified."
           show_usage
@@ -128,7 +128,7 @@ class Chef
         return contents
       end
 
-      def self.get_env(config)
+      def get_env(config)
         env = {}
         begin
           env = config[:with_env] ? JSON.parse(config[:with_env]) : {}
