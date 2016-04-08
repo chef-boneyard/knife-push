@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
   s.summary = "Knife plugin for chef push"
   s.description = s.summary
+  s.license = "Apache-2.0"
   s.author = "John Keiser"
   s.email = "jkeiser@opscode.com"
   s.homepage = "http://www.chef.io"
