@@ -9,7 +9,7 @@ We utilize **Github Issues** for issue tracking and contributions. You can contr
 
 ## Contribution Process
 
-We have a 3 step process that utilizes **Github Issues**:
+We have a three step process that utilizes **Github Issues**:
 
 1. Sign or be added to an existing [Contributor License Agreement (CLA)](https://supermarket.chef.io/become-a-contributor).
 2. Create a Github Pull Request.
@@ -28,7 +28,7 @@ The Chef Code Review process happens on Github pull requests. See
 Once you a pull request, the **Chef Engineering Team** or **Chef Core Committers** will review your code
   and respond to you with any feedback they might have. The process at this point is as follows:
 
-1. 2 thumbs-ups are required from the **Chef Engineering Team** or **Chef Core Committers** for all merges.
+1. Two thumbs-ups are required from the **Chef Engineering Team** or **Chef Core Committers** for all merges.
 2. When ready, your pull request will be tagged with label `Ready For Merge`.
 3. Your patch will be merged into `master` including necessary documentation updates
   and you will be included in `CHANGELOG.md`. Our goal is to have patches merged in 2 weeks
