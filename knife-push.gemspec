@@ -1,18 +1,17 @@
-$:.unshift(File.dirname(__FILE__) + '/lib')
-require 'knife-push/version'
+$:.unshift(File.dirname(__FILE__) + "/lib")
+require "knife-push/version"
 
 Gem::Specification.new do |s|
   s.name = "knife-push"
   s.version = Knife::Push::VERSION
   s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
-  s.extra_rdoc_files = ["README.rdoc", "LICENSE"]
-  s.summary = "Knife plugin for chef push"
+  s.extra_rdoc_files = ["README.md", "CONTRIBUTING.md", "LICENSE" ]
+  s.summary = "Knife plugin for Chef push"
   s.description = s.summary
   s.license = "Apache-2.0"
   s.author = "John Keiser"
-  s.email = "jkeiser@opscode.com"
-  s.homepage = "http://www.chef.io"
+  s.email = "jkeiser@chef.io"
+  s.homepage = "https://www.chef.io"
 
   # We need a more recent version of mixlib-cli in order to support --no- options.
   # ... but, we can live with those options not working, if it means the plugin
@@ -23,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rake'
   s.require_path = 'lib'
-  s.files = %w(LICENSE README.rdoc Rakefile) + Dir.glob("{lib,spec}/**/*")
+  s.files = %w{LICENSE README.md CONTRIBUTING.md Rakefile} + Dir.glob("{lib,spec}/**/*")
 end
