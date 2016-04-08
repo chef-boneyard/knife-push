@@ -1,4 +1,5 @@
 # Knife Push
+[![Gem Version](https://badge.fury.io/rb/knife-push.svg)](https://badge.fury.io/rb/knife-push)
 
 The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
