@@ -101,7 +101,7 @@ class Chef
           sleep(config[:poll_interval].to_f)
           putc(".")
           job = rest.get_rest(job_uri)
-          finished, state = JobHelpers.status_string(job)
+          finished, state = status_string(job)
           if state != previous_state
             puts state
             previous_state = state
