@@ -124,9 +124,11 @@ class Chef
             exit 1
           end
 
-          if config[:send_file]
-            ui.error "Sending a file isn't possible for Push Jobs 1.0"
-            exit 1
+          %i{ send_file dir user }.each do |feature|
+            if config[feature]
+              ui.error "Can't use a 2.0 feature (#{feature.to_s}) with a 1.0 server"
+              exit 1
+            end
           end
 
           job = run_helper(config, job_json)
