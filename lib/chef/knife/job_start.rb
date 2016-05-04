@@ -98,16 +98,25 @@ class Chef
         job_json = {
           'command' => job_name,
           'nodes' => @node_names,
-          'capture_output' => config[:capture_output]
         }
-        job_json['file'] = "raw:" + file_helper(config[:send_file]) if config[:send_file]
         job_json['quorum'] = get_quorum(config[:quorum], @node_names.length)
-        env = get_env(config)
-        job_json['env'] = env if env
-        job_json['dir'] = config[:in_dir] if config[:in_dir]
-        job_json['user'] = config[:as_user] if config[:as_user]
 
-        job = run_helper(config, job_json)
+        v2_json = job_json.dup
+
+        v2_json['file'] = "raw:" + file_helper(config[:send_file]) if config[:send_file]
+
+        v2_json['capture_output'] = config[:capture_output]
+        env = get_env(config)
+        v2_json['env'] = env if env
+        v2_json['dir'] = config[:in_dir] if config[:in_dir]
+        v2_json['user'] = config[:as_user] if config[:as_user]
+
+        begin
+          job = run_helper(config, v2_json)
+        rescue Net::HTTPServerException => e
+          raise e if e.response.code != "400"
+          job = run_helper(config, job_json)
+        end
 
         output(job)
 
