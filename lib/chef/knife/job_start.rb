@@ -99,6 +99,7 @@ class Chef
           'command' => job_name,
           'nodes' => @node_names,
         }
+
         job_json['quorum'] = get_quorum(config[:quorum], @node_names.length)
 
         v2_json = job_json.dup
@@ -115,6 +116,19 @@ class Chef
           job = run_helper(config, v2_json)
         rescue Net::HTTPServerException => e
           raise e if e.response.code != "400"
+
+          ui.warn "Falling back to Push Jobs v1 mode."
+
+          unless env.empty?
+            ui.error "Sending Environment attributes isn't possible for Push Jobs 1.0"
+            exit 1
+          end
+
+          if config[:send_file]
+            ui.error "Sending a file isn't possible for Push Jobs 1.0"
+            exit 1
+          end
+
           job = run_helper(config, job_json)
         end
 
