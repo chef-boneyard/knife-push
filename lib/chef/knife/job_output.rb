@@ -21,8 +21,8 @@ class Chef
       banner "knife job output <job id> <node> [<node> ...]"
 
       option :channel,
-             :long => '--channel stdout|stderr',
-             :default => 'stdout',
+             :long => "--channel stdout|stderr",
+             :default => "stdout",
              :description => "Which output channel to fetch (default stdout)."
 
       def run
@@ -32,7 +32,7 @@ class Chef
 
         uri = "pushy/jobs/#{job_id}/output/#{node}/#{channel}"
 
-        job = rest.get_rest(uri, false, {"Accept"=>"application/octet-stream"})
+        job = rest.get_rest(uri, false, { "Accept" => "application/octet-stream" })
 
         output(job)
       end

@@ -28,13 +28,13 @@ class Chef
 
       private
 
-      def get_node_statuses(name_args=[])
+      def get_node_statuses(name_args = [])
         if name_args.length == 0
           rest.get_rest("pushy/node_states")
         else
           results = []
           name_args.each do |arg|
-            if arg.index(':')
+            if arg.index(":")
               search(:node, arg).each do |node|
                 results << rest.get_rest("pushy/node_states/#{node.node_name}")
               end

@@ -27,7 +27,7 @@ class Chef
           begin
             nodes = q.search(:node, escaped_query).first
           rescue Net::HTTPServerException => e
-            msg Chef::JSONCompat.from_json(e.response.body)['error'].first
+            msg Chef::JSONCompat.from_json(e.response.body)["error"].first
             ui.error("knife search failed: #{msg}")
             exit 1
           end
@@ -45,21 +45,21 @@ class Chef
       end
 
       def status_string(job)
-        case job['status']
-        when 'new'
-          [false, 'Initialized.']
-        when 'voting'
-          [false, job['status'].capitalize + '.']
+        case job["status"]
+        when "new"
+          [false, "Initialized."]
+        when "voting"
+          [false, job["status"].capitalize + "."]
         else
-          total = job['nodes'].values.inject(0) { |sum,nodes| sum+nodes.length }
-          in_progress = job['nodes'].keys.inject(0) { |sum,status|
-            nodes = job['nodes'][status]
-            sum + (%w(new voting running).include?(status) ? 1 : 0)
+          total = job["nodes"].values.inject(0) { |sum, nodes| sum + nodes.length }
+          in_progress = job["nodes"].keys.inject(0) { |sum, status|
+            nodes = job["nodes"][status]
+            sum + (%w{new voting running}.include?(status) ? 1 : 0)
           }
-          if job['status'] == 'running'
-            [false, job['status'].capitalize + " (#{in_progress}/#{total} in progress) ..."]
+          if job["status"] == "running"
+            [false, job["status"].capitalize + " (#{in_progress}/#{total} in progress) ..."]
           else
-            [true, job['status'].capitalize + '.']
+            [true, job["status"].capitalize + "."]
           end
         end
       end
@@ -73,16 +73,16 @@ class Chef
 
         case qmatch[2]
           when "%" then
-            ((num.to_f/100)*total_nodes).ceil
+            ((num.to_f / 100) * total_nodes).ceil
           else
             num.to_i
         end
       end
 
       def status_code(job)
-        if job['status'] == "complete" && job["nodes"].keys.all? do |key|
-            key == "succeeded" || key == "nacked" || key == "unavailable"
-          end
+        if job["status"] == "complete" && job["nodes"].keys.all? do |key|
+             key == "succeeded" || key == "nacked" || key == "unavailable"
+           end
           0
         else
           1
@@ -90,11 +90,11 @@ class Chef
       end
 
       def run_helper(config, job_json)
-        job_json['run_timeout'] ||= config[:run_timeout].to_i if config[:run_timeout]
+        job_json["run_timeout"] ||= config[:run_timeout].to_i if config[:run_timeout]
 
-        result = rest.post_rest('pushy/jobs', job_json)
-        job_uri = result['uri']
-        puts "Started.  Job ID: #{job_uri[-32,32]}"
+        result = rest.post_rest("pushy/jobs", job_json)
+        job_uri = result["uri"]
+        puts "Started.  Job ID: #{job_uri[-32, 32]}"
         exit(0) if config[:nowait]
         previous_state = "Initialized."
         begin
@@ -133,7 +133,7 @@ class Chef
         begin
           env = config[:with_env] ? JSON.parse(config[:with_env]) : {}
         rescue Exception => e
-           Chef::Log.info("Can't parse environment as JSON")
+          Chef::Log.info("Can't parse environment as JSON")
         end
       end
     end
