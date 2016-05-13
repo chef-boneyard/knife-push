@@ -15,7 +15,7 @@
 # under the License.
 #
 
-require 'chef/knife/job_helpers'
+require "chef/knife/job_helpers"
 
 class Chef
   class Knife
@@ -24,64 +24,64 @@ class Chef
       include JobHelpers
 
       deps do
-        require 'chef/rest'
-        require 'chef/node'
-        require 'chef/search/query'
+        require "chef/rest"
+        require "chef/node"
+        require "chef/search/query"
       end
 
       banner "knife job start <command> [<node> <node> ...]"
 
       option :run_timeout,
-        :long => '--timeout TIMEOUT',
+        :long => "--timeout TIMEOUT",
         :description => "Maximum time the job will be allowed to run (in seconds)."
 
       option :quorum,
-            :short => '-q QUORUM',
-            :long => '--quorum QUORUM',
-            :default => '100%',
-            :description => 'Pushy job quorum. Percentage (-q 50%) or Count (-q 145).'
+            :short => "-q QUORUM",
+            :long => "--quorum QUORUM",
+            :default => "100%",
+            :description => "Pushy job quorum. Percentage (-q 50%) or Count (-q 145)."
 
       option :search,
-            :short => '-s QUERY',
-            :long => '--search QUERY',
+            :short => "-s QUERY",
+            :long => "--search QUERY",
             :required => false,
-            :description => 'Solr query for list of job candidates.'
+            :description => "Solr query for list of job candidates."
 
       option :send_file,
-             :long => '--file FILE',
+             :long => "--file FILE",
              :default => nil,
-             :description => 'File to send to job.'
+             :description => "File to send to job."
 
       option :capture_output,
-             :long => '--capture',
+             :long => "--capture",
              :boolean => true,
              :default => false,
-             :description => 'Capture job output.'
+             :description => "Capture job output."
 
       option :with_env,
              :long => "--with-env ENV",
              :default => nil,
-             :description => 'JSON blob of environment variables to set.'
+             :description => "JSON blob of environment variables to set."
 
       option :as_user,
              :long => "--as-user USER",
              :default => nil,
-             :description => 'User id to run as.'
+             :description => "User id to run as."
 
       option :in_dir,
              :long => "--in-dir DIR",
              :default => nil,
-             :description => 'Directory to execute the command in.'
+             :description => "Directory to execute the command in."
 
       option :nowait,
-             :long => '--nowait',
-             :short => '-b',
+             :long => "--nowait",
+             :short => "-b",
              :boolean => true,
              :default => false,
              :description => "Rather than waiting for each job to complete, exit immediately after starting the job."
 
       option :poll_interval,
-             :long => '--poll-interval RATE',
+             :long => "--poll-interval RATE",
              :default => 1.0,
              :description => "Repeat interval for job status update (in seconds)."
 
@@ -93,24 +93,24 @@ class Chef
           exit 1
         end
 
-        @node_names = process_search(config[:search], name_args[1,@name_args.length-1])
+        @node_names = process_search(config[:search], name_args[1, @name_args.length - 1])
 
         job_json = {
-          'command' => job_name,
-          'nodes' => @node_names,
+          "command" => job_name,
+          "nodes" => @node_names,
         }
 
-        job_json['quorum'] = get_quorum(config[:quorum], @node_names.length)
+        job_json["quorum"] = get_quorum(config[:quorum], @node_names.length)
 
         v2_json = job_json.dup
 
-        v2_json['file'] = "raw:" + file_helper(config[:send_file]) if config[:send_file]
+        v2_json["file"] = "raw:" + file_helper(config[:send_file]) if config[:send_file]
 
-        v2_json['capture_output'] = config[:capture_output]
+        v2_json["capture_output"] = config[:capture_output]
         env = get_env(config)
-        v2_json['env'] = env if env
-        v2_json['dir'] = config[:in_dir] if config[:in_dir]
-        v2_json['user'] = config[:as_user] if config[:as_user]
+        v2_json["env"] = env if env
+        v2_json["dir"] = config[:in_dir] if config[:in_dir]
+        v2_json["user"] = config[:as_user] if config[:as_user]
 
         begin
           job = run_helper(config, v2_json)
@@ -126,7 +126,7 @@ class Chef
 
           %i{ send_file dir user }.each do |feature|
             if config[feature]
-              ui.error "Can't use a 2.0 feature (#{feature.to_s}) with a 1.0 server"
+              ui.error "Can't use a 2.0 feature (#{feature}) with a 1.0 server"
               exit 1
             end
           end
@@ -137,7 +137,6 @@ class Chef
         output(job)
 
         exit(status_code(job))
-
       end
 
       private

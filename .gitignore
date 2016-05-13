@@ -1,0 +1,32 @@
+.autotest
+coverage
+.DS_Store
+pkg/*
+tags
+*/tags
+*~
+.chef
+
+# You should check in your Gemfile.lock in applications, and not in gems
+# This also matches Berksfile.lock
+Gemfile.lock
+Berksfile.lock
+external_tests/*.lock
+acceptance/Gemfile.lock
+omnibus/Gemfile.lock
+/*.lock
+/Gemfile.local
+
+# Do not check in the .bundle directory, or any of the files inside it. Those
+# files are specific to each particular machine, and are used to persist
+# installation options between runs of the bundle install command.
+.bundle
+
+# RVM and RBENV ruby version files
+.rbenv-version
+.rvmrc
+.ruby-version
+.ruby-gemset
+
+# IDE files
+.project
