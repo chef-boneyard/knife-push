@@ -1,5 +1,6 @@
 # Knife Push
-[![Gem Version](https://badge.fury.io/rb/knife-push.svg)](https://badge.fury.io/rb/knife-push)
+
+[![Gem Version](https://badge.fury.io/rb/knife-push.svg)](https://badge.fury.io/rb/knife-push) [![Build Status](https://travis-ci.org/chef/knife-push.svg?branch=master)](https://travis-ci.org/chef/knife-push)
 
 The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
@@ -13,17 +14,17 @@ To build and install the plugin, run:
 
 ## Configuration:
 
-If push server is running on the same host as the OPC, then no reconfiguration is required on the Chef workstation.
+If push server is running on the same host as the Chef Server, then no reconfiguration is required on the Chef workstation.
 
 ## Subcommands:
 
-This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a `--help` flag.
+This plugin provides the following Knife subcommands. Specific command options can be found by invoking the subcommand with a `--help` flag.
 
 ### job list
 
 The `job list` subcommand is used to view a list of Push jobs.
 
-#### Syntax   $ knife job list
+#### Syntax $ knife job list
 
 ### job start
 
@@ -111,7 +112,7 @@ knife job output 26e98ba162fa7ba6fb2793125553c7ae test --channel stdout
 
 #### Options
 
-  --channel [stderr|stdout]
+--channel [stderr|stdout]
 
 The output channel to capture.
 
@@ -145,11 +146,11 @@ knife node status
 
 ## License
 
-**Author:**   John Keiser([jkeiser@chef.io](mailto:jkeiser@chef.io))
+**Author:** John Keiser([jkeiser@chef.io](mailto:jkeiser@chef.io))
 
 **Copyright:** Copyright 2008-2016, Chef Software, Inc.
 
-**License:**   Apache License, Version 2.0
+**License:** Apache License, Version 2.0
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
