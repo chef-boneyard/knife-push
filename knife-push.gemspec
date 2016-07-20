@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
   s.require_path = "lib"
   s.files = %w{LICENSE README.md CONTRIBUTING.md Rakefile} + Dir.glob("{lib,spec}/**/*")
-  s.required_ruby_version = '>= 2.0'
+  s.required_ruby_version = ">= 2.1"
 end
