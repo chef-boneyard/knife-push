@@ -15,7 +15,7 @@
 # under the License.
 #
 
-require "chef/knife/job_helpers"
+require_relative 'job_helpers'
 
 class Chef
   class Knife
