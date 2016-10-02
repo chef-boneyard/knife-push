@@ -4,6 +4,11 @@
 
 The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
+## Requirements
+
+- Chef 12.0 higher
+- Ruby 2.2.2 or higher
+
 ## Installation:
 
 To build and install the plugin, run:
