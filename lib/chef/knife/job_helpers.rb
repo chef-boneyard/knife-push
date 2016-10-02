@@ -52,10 +52,10 @@ class Chef
           [false, job["status"].capitalize + "."]
         else
           total = job["nodes"].values.inject(0) { |sum, nodes| sum + nodes.length }
-          in_progress = job["nodes"].keys.inject(0) { |sum, status|
+          in_progress = job["nodes"].keys.inject(0) do |sum, status|
             nodes = job["nodes"][status]
             sum + (%w{new voting running}.include?(status) ? 1 : 0)
-          }
+          end
           if job["status"] == "running"
             [false, job["status"].capitalize + " (#{in_progress}/#{total} in progress) ..."]
           else
