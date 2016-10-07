@@ -4,6 +4,11 @@
 
 The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
+## Requirements
+
+- Chef 12.0 higher
+- Ruby 2.2.2 or higher
+
 ## Installation:
 
 To build and install the plugin, run:
@@ -144,6 +149,11 @@ The `node status` argument is used to identify nodes that Push may interact with
 knife node status
 ```
 
+## Contributing
+
+For information on contributing to this project see <https://github.com/chef/chef/blob/master/CONTRIBUTING.md>
+
+
 ## License
 
 **Author:** John Keiser([jkeiser@chef.io](mailto:jkeiser@chef.io))
@@ -152,10 +162,16 @@ knife node status
 
 **License:** Apache License, Version 2.0
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+```text
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-```
-http://www.apache.org/licenses/LICENSE-2.0
-```
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
