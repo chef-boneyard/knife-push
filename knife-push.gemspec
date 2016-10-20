@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name = "knife-push"
   s.version = Knife::Push::VERSION
   s.platform = Gem::Platform::RUBY
-  s.extra_rdoc_files = ["README.md", "CONTRIBUTING.md", "LICENSE" ]
+  s.extra_rdoc_files = ["README.md", "LICENSE" ]
   s.summary = "Knife plugin for Chef push"
   s.description = s.summary
   s.license = "Apache-2.0"
