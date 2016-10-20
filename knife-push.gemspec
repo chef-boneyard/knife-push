@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   # can be included with apps that have restrictive Gemfile.locks.
   # s.add_dependency "mixlib-cli", ">= 1.2.2"
 
-  s.add_dependency "chef", ">= 12.0"
+  s.add_dependency "chef", ">= 12.7.2"
   s.require_path = "lib"
   s.files = %w{LICENSE README.md Rakefile} + Dir.glob("{lib,spec}/**/*")
   s.required_ruby_version = ">= 2.2.2"

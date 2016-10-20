@@ -32,7 +32,7 @@ class Chef
 
         uri = "pushy/jobs/#{job_id}/output/#{node}/#{channel}"
 
-        job = rest.get_rest(uri, false, { "Accept" => "application/octet-stream" })
+        job = rest.get_rest(uri, { "Accept" => "application/octet-stream" })
 
         output(job)
       end
