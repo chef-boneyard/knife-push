@@ -24,7 +24,6 @@ class Chef
       include JobHelpers
 
       deps do
-        require "chef/rest"
         require "chef/node"
         require "chef/search/query"
       end
@@ -138,8 +137,6 @@ class Chef
 
         exit(status_code(job))
       end
-
-      private
 
     end
   end
