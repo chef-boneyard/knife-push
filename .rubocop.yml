@@ -1,0 +1,12 @@
+# Configuration parameters: AllowSafeAssignment.
+Lint/AssignmentInCondition:
+  Exclude:
+    - 'lib/chef/knife/job_helpers.rb'
+
+Lint/Loop:
+  Exclude:
+    - 'lib/chef/knife/job_helpers.rb'
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'lib/chef/knife/job_helpers.rb'
