@@ -41,7 +41,7 @@ class Chef
           exit 1
         end
 
-        return node_names
+        node_names
       end
 
       def status_string(job)
@@ -117,7 +117,7 @@ class Chef
           exit 1
         end
         contents = ""
-        if File.exists?(file_name)
+        if File.exist?(file_name)
           File.open(file_name, "rb") do |file|
             contents = file.read
           end
@@ -125,7 +125,7 @@ class Chef
           ui.error "#{file_name} not found"
           exit 1
         end
-        return contents
+        contents
       end
 
       def get_env(config)
