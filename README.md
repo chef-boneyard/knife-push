@@ -6,7 +6,7 @@ The knife push plugin is used by the Chef workstation to interact with the Push 
 
 ## Requirements
 
-- Chef 12.0 higher
+- Chef 13.0 higher
 - Ruby 2.2.2 or higher
 
 ## Installation:
@@ -158,7 +158,7 @@ For information on contributing to this project see <https://github.com/chef/che
 
 **Author:** John Keiser([jkeiser@chef.io](mailto:jkeiser@chef.io))
 
-**Copyright:** Copyright 2008-2016, Chef Software, Inc.
+**Copyright:** Copyright 2008-2018, Chef Software, Inc.
 
 **License:** Apache License, Version 2.0
 
