@@ -1,7 +1,7 @@
 
 module Knife
   module Push
-    VERSION = "1.0.5".freeze
+    VERSION = "1.1.0".freeze
     MAJOR, MINOR, TINY = VERSION.split(".")
   end
 end
