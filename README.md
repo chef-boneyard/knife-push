@@ -11,11 +11,7 @@ The knife push plugin is used by the Chef workstation to interact with the Push 
 
 ## Installation:
 
-To build and install the plugin, run:
-
-```shell
-    rake install
-```
+This plugin ships built into Chef-DK. Install Chef-DK to use the plugin.
 
 ## Configuration:
 
