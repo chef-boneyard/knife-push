@@ -1,14 +1,14 @@
-**Umbrella Project**: [Knife](https://github.com/chef/chef-oss-practices/blob/master/projects/knife.md)
-
-**Project State**: [Deprecated](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#deprecated)
-
-**Issues [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md)**: None
-
-**Pull Request [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md)**: None
-
 # Knife Push
 
 [![Gem Version](https://badge.fury.io/rb/knife-push.svg)](https://badge.fury.io/rb/knife-push) [![Build Status](https://travis-ci.org/chef/knife-push.svg?branch=master)](https://travis-ci.org/chef/knife-push)
+
+**Umbrella Project: [Knife](https://github.com/chef/chef-oss-practices/blob/master/projects/knife.md)**
+
+**Project State: [Deprecated](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#deprecated)**
+
+**Issues [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md): None**
+
+**Pull Request [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md): None**
 
 The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
