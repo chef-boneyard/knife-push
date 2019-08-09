@@ -21,9 +21,9 @@ class Chef
       banner "knife job output <job id> <node> [<node> ...]"
 
       option :channel,
-             long: "--channel stdout|stderr",
-             default: "stdout",
-             description: "Which output channel to fetch (default stdout)."
+        long: "--channel stdout|stderr",
+        default: "stdout",
+        description: "Which output channel to fetch (default stdout)."
 
       def run
         job_id = name_args[0]

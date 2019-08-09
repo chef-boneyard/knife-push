@@ -23,7 +23,7 @@ class Chef
         if search
           q = Chef::Search::Query.new
           escaped_query = URI.escape(search,
-                                      Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+            Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
           begin
             nodes = q.search(:node, escaped_query).first
           rescue Net::HTTPServerException => e
@@ -81,8 +81,8 @@ class Chef
 
       def status_code(job)
         if job["status"] == "complete" && job["nodes"].keys.all? do |key|
-             key == "succeeded" || key == "nacked" || key == "unavailable"
-           end
+          key == "succeeded" || key == "nacked" || key == "unavailable"
+        end
           0
         else
           1

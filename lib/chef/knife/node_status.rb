@@ -22,7 +22,7 @@ class Chef
 
       def run
         get_node_statuses(name_args).each do |node_status|
-          puts "#{node_status['node_name']}\t#{node_status['availability']}"
+          puts "#{node_status["node_name"]}\t#{node_status["availability"]}"
         end
       end
 
