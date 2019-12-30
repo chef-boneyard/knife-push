@@ -1,9 +1,17 @@
 # knife-push Change Log
 
-<!-- latest_release -->
+<!-- latest_release 1.1.3 -->
+## [v1.1.3](https://github.com/chef/knife-push/tree/v1.1.3) (2019-12-30)
+
+#### Merged Pull Requests
+- Convert PR testing to buildkite [#72](https://github.com/chef/knife-push/pull/72) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=1.1.2 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Convert PR testing to buildkite [#72](https://github.com/chef/knife-push/pull/72) ([tas50](https://github.com/tas50)) <!-- 1.1.3 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
