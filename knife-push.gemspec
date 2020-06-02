@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/chef/knife-push/"
 
   s.add_dependency "chef", ">= 13.0"
+  s.add_dependency "addressable"
   s.require_path = "lib"
   s.files = %w{LICENSE} + Dir.glob("{lib}/**/*")
   s.required_ruby_version = ">= 2.2.2"

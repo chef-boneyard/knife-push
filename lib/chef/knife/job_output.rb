@@ -39,16 +39,10 @@ class Chef
 
       def get_channel(channel)
         channel ||= "stdout"
-        case channel
-        when "stdout"
-          return channel
-        when "stderr"
-          return channel
-        else
-          raise "Invalid Format please enter stdout or stderr"
-        end
-      end
+        return channel if channel == "stdout" || channel == "stderr"
 
+        raise "Invalid Format please enter stdout or stderr"
+      end
     end
   end
 end

@@ -15,6 +15,8 @@
 # under the License.
 #
 
+require "addressable/uri"
+
 class Chef
   class Knife
     module JobHelpers
@@ -22,8 +24,7 @@ class Chef
         node_names = []
         if search
           q = Chef::Search::Query.new
-          escaped_query = URI.escape(search,
-            Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+          escaped_query = Addressable::URI.encode_component(search, Addressable::URI::CharacterClasses::QUERY)
           begin
             nodes = q.search(:node, escaped_query).first
           rescue Net::HTTPClientException => e

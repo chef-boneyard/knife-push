@@ -16,6 +16,9 @@ group :test do
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.5")
     gem "ohai", "<15"
     gem "chef", "<15"
+  else
+    gem "ohai"
+    gem "chef"
   end
 end
 
