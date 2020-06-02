@@ -1,29 +1,26 @@
 # knife-push Change Log
 
-<!-- latest_release 2.0.0 -->
-## [v2.0.0](https://github.com/chef/knife-push/tree/v2.0.0) (2020-06-02)
-
-#### Merged Pull Requests
-- Update the readme to reflect current requirements [#76](https://github.com/chef/knife-push/pull/76) ([tas50](https://github.com/tas50))
+<!-- latest_release -->
 <!-- latest_release -->
 
-<!-- release_rollup since=1.1.5 -->
-### Changes not yet released to rubygems.org
-
-#### Merged Pull Requests
-- Update the readme to reflect current requirements [#76](https://github.com/chef/knife-push/pull/76) ([tas50](https://github.com/tas50)) <!-- 2.0.0 -->
-- Require Chef Infra 15+ / Ruby 2.5+ [#75](https://github.com/chef/knife-push/pull/75) ([tas50](https://github.com/tas50)) <!-- 1.1.7 -->
-- Update deprecated Net::HTTPServerException with Net::HTTPClientException [#74](https://github.com/chef/knife-push/pull/74) ([vsingh-msys](https://github.com/vsingh-msys)) <!-- 1.1.6 -->
+<!-- release_rollup -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
+## [v2.0.0](https://github.com/chef/knife-push/tree/v2.0.0) (2020-06-02)
+
+#### Merged Pull Requests
+- Update deprecated Net::HTTPServerException with Net::HTTPClientException [#74](https://github.com/chef/knife-push/pull/74) ([vsingh-msys](https://github.com/vsingh-msys))
+- Require Chef Infra 15+ / Ruby 2.5+ [#75](https://github.com/chef/knife-push/pull/75) ([tas50](https://github.com/tas50))
+- Update the readme to reflect current requirements [#76](https://github.com/chef/knife-push/pull/76) ([tas50](https://github.com/tas50))
+<!-- latest_stable_release -->
+
 ## [v1.1.5](https://github.com/chef/knife-push/tree/v1.1.5) (2019-12-30)
 
 #### Merged Pull Requests
 - Convert PR testing to buildkite [#72](https://github.com/chef/knife-push/pull/72) ([tas50](https://github.com/tas50))
 - Substitute require for require_relative [#71](https://github.com/chef/knife-push/pull/71) ([tas50](https://github.com/tas50))
 - Support Ruby 2.4 in test [#73](https://github.com/chef/knife-push/pull/73) ([tas50](https://github.com/tas50))
-<!-- latest_stable_release -->
 
 ## [v1.1.2](https://github.com/chef/knife-push/tree/v1.1.2) (2018-12-04)
 
