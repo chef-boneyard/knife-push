@@ -1,9 +1,17 @@
 # knife-push Change Log
 
-<!-- latest_release -->
+<!-- latest_release 1.1.6 -->
+## [v1.1.6](https://github.com/chef/knife-push/tree/v1.1.6) (2020-06-02)
+
+#### Merged Pull Requests
+- Update deprecated Net::HTTPServerException with Net::HTTPClientException [#74](https://github.com/chef/knife-push/pull/74) ([vsingh-msys](https://github.com/vsingh-msys))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=1.1.5 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Update deprecated Net::HTTPServerException with Net::HTTPClientException [#74](https://github.com/chef/knife-push/pull/74) ([vsingh-msys](https://github.com/vsingh-msys)) <!-- 1.1.6 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
