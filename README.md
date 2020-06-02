@@ -14,18 +14,18 @@ The knife push plugin is used by the Chef workstation to interact with the Push 
 
 ## Requirements
 
-- Chef 13.0 higher
-- Ruby 2.2.2 or higher
+- Chef 15.0 higher
+- Ruby 2.5 or higher
 
-## Installation:
+## Installation
 
-This plugin ships built into Chef-DK. Install Chef-DK to use the plugin.
+This plugin ships built into Chef Workstation. Install Chef Workstation to use the plugin.
 
-## Configuration:
+## Configuration
 
 If push server is running on the same host as the Chef Server, then no reconfiguration is required on the Chef workstation.
 
-## Subcommands:
+## Subcommands
 
 This plugin provides the following Knife subcommands. Specific command options can be found by invoking the subcommand with a `--help` flag.
 
@@ -157,12 +157,11 @@ knife node status
 
 For information on contributing to this project see <https://github.com/chef/chef/blob/master/CONTRIBUTING.md>
 
-
 ## License
 
 **Author:** John Keiser([jkeiser@chef.io](mailto:jkeiser@chef.io))
 
-**Copyright:** Copyright 2008-2018, Chef Software, Inc.
+**Copyright:** Copyright Chef Software, Inc.
 
 **License:** Apache License, Version 2.0
 
