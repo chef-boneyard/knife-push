@@ -15,6 +15,8 @@
 # under the License.
 #
 
+require "addressable/uri"
+
 class Chef
   class Knife
     module JobHelpers
@@ -22,11 +24,10 @@ class Chef
         node_names = []
         if search
           q = Chef::Search::Query.new
-          escaped_query = URI.escape(search,
-            Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+          escaped_query = Addressable::URI.encode_component(search, Addressable::URI::CharacterClasses::QUERY)
           begin
             nodes = q.search(:node, escaped_query).first
-          rescue Net::HTTPServerException => e
+          rescue Net::HTTPClientException => e
             msg Chef::JSONCompat.from_json(e.response.body)["error"].first
             ui.error("knife search failed: #{msg}")
             exit 1
