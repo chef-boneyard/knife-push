@@ -16,15 +16,12 @@ group :test do
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.5")
     gem "ohai", "<15"
     gem "chef", "<15"
-  else
-    gem "ohai"
-    gem "chef"
   end
 end
 
 group :debug do
   gem "pry"
   gem "pry-byebug"
-  gem "pry-stack_explorer"
+  gem "pry-stack_explorer", "~> 0.4.0"
   gem "rb-readline"
 end
