@@ -113,7 +113,7 @@ class Chef
 
         begin
           job = run_helper(config, v2_json)
-        rescue Net::HTTPServerException => e
+        rescue Net::HTTPClientException => e
           raise e if e.response.code != "400"
 
           ui.warn "Falling back to Push Jobs v1 mode."

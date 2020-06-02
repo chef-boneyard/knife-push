@@ -26,7 +26,7 @@ class Chef
             Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
           begin
             nodes = q.search(:node, escaped_query).first
-          rescue Net::HTTPServerException => e
+          rescue Net::HTTPClientException => e
             msg Chef::JSONCompat.from_json(e.response.body)["error"].first
             ui.error("knife search failed: #{msg}")
             exit 1
