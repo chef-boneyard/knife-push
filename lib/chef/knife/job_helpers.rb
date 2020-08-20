@@ -15,7 +15,7 @@
 # under the License.
 #
 
-require "addressable/uri"
+require "addressable/uri" unless defined?(Addressable::URI)
 
 class Chef
   class Knife
