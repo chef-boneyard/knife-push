@@ -25,16 +25,49 @@ class Chef
         default: "stdout",
         description: "Which output channel to fetch (default stdout)."
 
+      option :all_nodes,
+             :long => "--all-nodes",
+             :boolean => true,
+             :default => false,
+             :description => "Display job output for all nodes."
+
       def run
         job_id = name_args[0]
         channel = get_channel(config[:channel])
-        node = name_args[1]
+        all_nodes = config[:all_nodes]
+
+        if all_nodes
+          job_uri = "pushy/jobs/#{job_id}"
+
+          status_hash = rest.get_rest(job_uri, { "Accept" => "application/json" })
+
+          status_hash['nodes'].each do |status,details|
+
+            status_hash['nodes'][status].each do |fqdn|
+
+              job = get_output(job_id,fqdn,channel)
+
+              output(fqdn)
+              output(job)
+            end
+
+          end
+
+        else
+          node = name_args[1]
+
+          job = get_output(job_id,node,channel)
+
+          output(job)
+        end
+      end
+
+      def get_output(job_id,node,channel)
 
         uri = "pushy/jobs/#{job_id}/output/#{node}/#{channel}"
 
-        job = rest.get_rest(uri, { "Accept" => "application/octet-stream" })
+        return rest.get_rest(uri, { "Accept" => "application/octet-stream" })
 
-        output(job)
       end
 
       def get_channel(channel)
