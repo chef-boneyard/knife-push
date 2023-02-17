@@ -30,3 +30,8 @@ omnibus/Gemfile.lock
 
 # IDE files
 .project
+
+# Documentation
+_site/*
+.yardoc/
+doc/

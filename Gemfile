@@ -2,6 +2,26 @@ source "https://rubygems.org"
 
 # Specify your gem's dependencies in knife-push.gemspec
 gemspec
-gem "rspec", "~> 3.0"
-gem "chefstyle"
-gem "rake", "~> 11.0"
+
+group :docs do
+  gem "github-markup"
+  gem "redcarpet"
+  gem "yard"
+end
+
+group :test do
+  gem "chefstyle"
+  gem "rake"
+  gem "rspec", "~> 3.0"
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.6")
+    gem "chef-zero", "~> 14.0"
+    gem "chef", "~> 15.0"
+  end
+end
+
+group :debug do
+  gem "pry"
+  gem "pry-byebug"
+  gem "pry-stack_explorer", "~> 0.4.0"
+  gem "rb-readline"
+end

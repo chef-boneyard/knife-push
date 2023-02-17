@@ -2,26 +2,30 @@
 
 [![Gem Version](https://badge.fury.io/rb/knife-push.svg)](https://badge.fury.io/rb/knife-push) [![Build Status](https://travis-ci.org/chef/knife-push.svg?branch=master)](https://travis-ci.org/chef/knife-push)
 
+**Umbrella Project: [Knife](https://github.com/chef/chef-oss-practices/blob/master/projects/knife.md)**
+
+**Project State: [Deprecated](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#deprecated)**
+
+**Issues [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md): None**
+
+**Pull Request [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md): None**
+
 The knife push plugin is used by the Chef workstation to interact with the Push API to start jobs, view job status, view job lists, and view node status.
 
 ## Requirements
 
-- Chef 12.0 higher
-- Ruby 2.2.2 or higher
+- Chef 15.0 higher
+- Ruby 2.5 or higher
 
-## Installation:
+## Installation
 
-To build and install the plugin, run:
+This plugin ships built into Chef Workstation. Install Chef Workstation to use the plugin.
 
-```shell
-    rake install
-```
-
-## Configuration:
+## Configuration
 
 If push server is running on the same host as the Chef Server, then no reconfiguration is required on the Chef workstation.
 
-## Subcommands:
+## Subcommands
 
 This plugin provides the following Knife subcommands. Specific command options can be found by invoking the subcommand with a `--help` flag.
 
@@ -165,12 +169,11 @@ knife node status
 
 For information on contributing to this project see <https://github.com/chef/chef/blob/master/CONTRIBUTING.md>
 
-
 ## License
 
 **Author:** John Keiser([jkeiser@chef.io](mailto:jkeiser@chef.io))
 
-**Copyright:** Copyright 2008-2016, Chef Software, Inc.
+**Copyright:** Copyright Chef Software, Inc.
 
 **License:** Apache License, Version 2.0
 

@@ -15,6 +15,8 @@
 # under the License.
 #
 
+require "addressable/uri" unless defined?(Addressable::URI)
+
 class Chef
   class Knife
     module JobHelpers
@@ -22,11 +24,10 @@ class Chef
         node_names = []
         if search
           q = Chef::Search::Query.new
-          escaped_query = URI.escape(search,
-                                      Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+          escaped_query = Addressable::URI.encode_component(search, Addressable::URI::CharacterClasses::QUERY)
           begin
             nodes = q.search(:node, escaped_query).first
-          rescue Net::HTTPServerException => e
+          rescue Net::HTTPClientException => e
             msg Chef::JSONCompat.from_json(e.response.body)["error"].first
             ui.error("knife search failed: #{msg}")
             exit 1
@@ -41,7 +42,7 @@ class Chef
           exit 1
         end
 
-        return node_names
+        node_names
       end
 
       def status_string(job)
@@ -81,8 +82,8 @@ class Chef
 
       def status_code(job)
         if job["status"] == "complete" && job["nodes"].keys.all? do |key|
-             key == "succeeded" || key == "nacked" || key == "unavailable"
-           end
+          key == "succeeded" || key == "nacked" || key == "unavailable"
+        end
           0
         else
           1
@@ -117,7 +118,7 @@ class Chef
           exit 1
         end
         contents = ""
-        if File.exists?(file_name)
+        if File.exist?(file_name)
           File.open(file_name, "rb") do |file|
             contents = file.read
           end
@@ -125,7 +126,7 @@ class Chef
           ui.error "#{file_name} not found"
           exit 1
         end
-        return contents
+        contents
       end
 
       def get_env(config)

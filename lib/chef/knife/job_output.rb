@@ -26,9 +26,9 @@ class Chef
       banner "knife job output <job id> <node> [<node> ...]"
 
       option :channel,
-             :long => "--channel stdout|stderr",
-             :default => "stdout",
-             :description => "Which output channel to fetch (default stdout)."
+        long: "--channel stdout|stderr",
+        default: "stdout",
+        description: "Which output channel to fetch (default stdout)."
 
       option :search,
             :short => "-s QUERY",
@@ -58,17 +58,11 @@ class Chef
       end
 
       def get_channel(channel)
-        channel = channel || "stdout"
-        case channel
-        when "stdout"
-          return channel
-        when "stderr"
-          return channel
-        else
-          raise "Invalid Format please enter stdout or stderr"
-        end
-      end
+        channel ||= "stdout"
+        return channel if channel == "stdout" || channel == "stderr"
 
+        raise "Invalid Format please enter stdout or stderr"
+      end
     end
   end
 end
