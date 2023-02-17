@@ -110,7 +110,11 @@ The `job output` command is used to view the output of Push jobs. (Push 2.0 and 
 #### Syntax
 
 ```shell
-knife job output JOBID
+knife job output JOBID NODENAME1 NODENAME2
+```
+
+```shell
+knife job output JOBID -s SEARCH_QUERY
 ```
 
 #### Examples
@@ -119,11 +123,19 @@ knife job output JOBID
 knife job output 26e98ba162fa7ba6fb2793125553c7ae test --channel stdout
 ```
 
+```shell
+knife job output 26e98ba162fa7ba6fb2793125553c7ae -s "policy_group:staging" --channel stdout
+```
+
 #### Options
 
 --channel [stderr|stdout]
 
 The output channel to capture.
+
+--search QUERY
+
+Solr query for list of nodes that can have job output.
 
 ### job status
 

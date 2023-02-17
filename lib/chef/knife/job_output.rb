@@ -15,9 +15,14 @@
 # under the License.
 #
 
+require "chef/knife/job_helpers"
+
 class Chef
   class Knife
     class JobOutput < Chef::Knife
+
+      include JobHelpers
+
       banner "knife job output <job id> <node> [<node> ...]"
 
       option :channel,
@@ -25,16 +30,31 @@ class Chef
         default: "stdout",
         description: "Which output channel to fetch (default stdout)."
 
+      option :search,
+            :short => "-s QUERY",
+            :long => "--search QUERY",
+            :required => false,
+            :description => "Solr query for list of nodes that can have job output."
+
       def run
         job_id = name_args[0]
         channel = get_channel(config[:channel])
-        node = name_args[1]
 
-        uri = "pushy/jobs/#{job_id}/output/#{node}/#{channel}"
+        node_names = process_search(config[:search], name_args[1, @name_args.length - 1])
 
-        job = rest.get_rest(uri, { "Accept" => "application/octet-stream" })
+        node_names.each do |node|
+          uri = "pushy/jobs/#{job_id}/output/#{node}/#{channel}"
+          begin
+            job = rest.get_rest(uri, { "Accept" => "application/octet-stream" })
+            output(node: node, output: job)
+          rescue => e
+            if e.response.code == "404"
+              ui.warn("Could not find output for node #{node}, server returned 404")
+            end
+          end
 
-        output(job)
+        end
+
       end
 
       def get_channel(channel)
